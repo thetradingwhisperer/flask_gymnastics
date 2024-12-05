@@ -1,3 +1,3 @@
 MESSAGES = {
-    'default': 'Hello'
+    'default': 'Hello to the world of flask'
 }
