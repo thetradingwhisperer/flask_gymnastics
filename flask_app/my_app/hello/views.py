@@ -1,16 +1,19 @@
-from my_app import app
 from my_app.hello.models import MESSAGES
+from flask import render_template, request, Blueprint
 
-@app.route('/')
-@app.route('/hello')
+hello = Blueprint('hello', __name__)
+
+@hello.route('/')
+@hello.route('/hello')
 def hello_world():
-    return MESSAGES['default']
+    user = request.args.get('user', 'Arsene') # second args is a default value
+    return render_template('index.html', user=user)
 
-@app.route('/show/<key>')
+@hello.route('/show/<key>')
 def get_message(key):
     return MESSAGES.get(key) or "%s not found!" % key
 
-@app.route('/add/<key>/<message>')
+@hello.route('/add/<key>/<message>')
 def add_or_update_message(key, message):
     MESSAGES[key] = message
     return "%s Added/Updated" % key
